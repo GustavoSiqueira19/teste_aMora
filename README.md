@@ -2,6 +2,7 @@
 # Simulador de entrada de imóveis - aMora
 ---------------------------------------------------------------
 *Este é um código de teste técnico desenvolvido para a empresa aMora.
+
 *A aplicação simula a entrada de um imóvel e calcula o valor mensal que o usuário precisa guardar, com ajustes anuais baseados em taxas de correção (IGPM) e juros.
 *
 
