@@ -4,7 +4,7 @@
 *Este é um código de teste técnico desenvolvido para a empresa aMora.
 
 *A aplicação simula a entrada de um imóvel e calcula o valor mensal que o usuário precisa guardar, com ajustes anuais baseados em taxas de correção (IGPM) e juros.
-
+*
 
      #REQUISITOS PARA EXECUÇÃO
 * - Ter o Node.js instalado na máquina.
@@ -164,11 +164,33 @@ const readline = require('readline');
     // Exporta funcionalidades (Funções, classes ou objetos) para serem importadas e reutilizadas em outro arquivo.
 
     module.exports = SimuladorDeEntradaDeImovel
+
 }
 
-
-
     main();
+}    
 
+
+
+    #Exemplo preenchido:
+
+    Digite o valor do imóvel: 500000
+    Digite o percentual (%) da entrada: 5
+    Digite a duração do contrato (em anos): 3 
+    Digite a taxa do IGPM anual (%): 6
+    Digite a taxa de juros anual (%): 8 
+
+    ===Resultados===
+    ° Valor da entrada:     R$25000.00
+    ° Valor a guardar:      R$75000.00
+    ° Valor mensal base:    R$2083.33
+    ° Valor mensal pelo IGPM:
+      ° Ano 1: R$ 2083.33
+      ° Ano 2: R$ 2208.33
+      ° Ano 3: R$ 2340.83
+    ° Valor mensal com 8% ao ano:
+     ° Ano 1: R$ 2083.33
+     ° Ano 2: R$ 2250.00
+     ° Ano 3: R$ 2430.00
 
 
