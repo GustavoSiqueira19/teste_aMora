@@ -10,7 +10,7 @@ async function main() {
     const percentualEntrada = parseFloat(await input.perguntar('Digite o percentual (%) da entrada: '));
     const duracaoContrato = parseInt(await input.perguntar('Digite a duração do contrato (em anos): '));
     const taxaIGPM = parseFloat(await input.perguntar('Digite a taxa do IGPM anual (%): '));
-    const taxaJuros = parseFloat(await input.perguntar('Digite a taxa de juros anual (%) para cenário alternativo: '));
+    const taxaJuros = parseFloat(await input.perguntar('Digite a taxa de juros anual (%): '));
 
     input.fechar();
 
