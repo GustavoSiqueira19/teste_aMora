@@ -1,196 +1,113 @@
 
 # Simulador de entrada de imóveis - aMora
 ---------------------------------------------------------------
-*Este é um código de teste técnico desenvolvido para a empresa aMora.
+    // Simulador de Entrada de Imóvel: 
+Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gustavo Siqueira da Silva em Node.js, com o objetivo de permitir ao usuário simular o valor necessário para dar entrada em um imóvel e planejar a economia mensal necessária ao longo de um período de tempo. Considerando também a correção monetária com base em taxas como o IGPM e juros compostos anuais.
 
-*A aplicação simula a entrada de um imóvel e calcula o valor mensal que o usuário precisa guardar, com ajustes anuais baseados em taxas de correção (IGPM) e juros.
-*
+*(Para a execução do código, é necessário ter Node.js instalado em seu computador.)*
 
-     #REQUISITOS PARA EXECUÇÃO
-* - Ter o Node.js instalado na máquina.
-* - Executar via terminal com o comando: node nomeDoArquivo.js (index.js).
+    // Estrutura e Componentes do Sistema:
 
-* - Autor: Gustavo Siqueira.
-* - Data: 22/05/2025.
+A aplicação é dividida em três módulos principais, seguindo o princípio da separação de responsabilidades:
 
-const readline = require('readline');
+    1. LeitorDeTerminal (leitordeterminal.js)
 
-    // === Execução Principal da Aplicação ===
+ - Classe responsável por interagir com o usuário via terminal.
 
-    //Comando que importa classe de outros arquivos para ser usada no meu arquivo principal. 
+ - Utiliza o módulo readline do Node.js para realizar perguntas e capturar as respostas do usuário.
 
-    const LeitorDeTerminal = require('./leitordeterminal');
-    const SimuladorDeEntradaDeImovel = require('./simuladordeentradadeimovel');
-    const ImpressoraDeTerminal = require('./impressoradeterminal');
+        Métodos:
 
-    async function main() {
-    const input = new LeitorDeTerminal();
+ - Perguntar(texto): exibe uma pergunta e retorna a resposta como uma Promisse.
 
-    const valorImovel = parseFloat(await input.perguntar('Digite o valor do imóvel: '));
-    const percentualEntrada = parseFloat(await input.perguntar('Digite o percentual (%) da entrada: '));
-    const duracaoContrato = parseInt(await input.perguntar('Digite a duração do contrato (em anos): '));
-    const taxaIGPM = parseFloat(await input.perguntar('Digite a taxa do IGPM anual (%): '));
-    const taxaJuros = parseFloat(await input.perguntar('Digite a taxa de juros anual (%): '));
+ - Fechar(): encerra a interface de leitura.
 
-    input.fechar();
+        2. SimuladorDeEntradaDeImovel (simuladordeentradadeimovel.js)
 
-    const calculadora = new SimuladorDeEntradaDeImovel(
-        valorImovel,
-        percentualEntrada,
-        duracaoContrato,
-        taxaIGPM,
-        taxaJuros
-    );
+ - Classe que realiza todos os cálculos financeiros da aplicação.
 
-    const resultados = calculadora.getResultados();
+ - A partir dos dados fornecidos pelo usuário, calcula:
 
-    const impressora = new ImpressoraDeTerminal();
+ - Valor da entrada (com base no percentual informado).
 
-    impressora.mostrarResultados(resultados, taxaJuros / 100);
-}   
-   
-    // === Entrada de Dados via Terminal === //
+ - Total a ser guardado (fixado em 15% do valor do imóvel).
 
-    class LeitorDeTerminal {
-    constructor() {
-        this.rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-    }
+ - Parcela base mensal (dividido pela quantidade de meses do contrato).
 
-    // Exibe uma pergunta e retorna a resposta como Promise
+ - Parcelas corrigidas anualmente pelo IGPM e pelos juros compostos.
 
-    perguntar(texto) {
-        return new Promise(resolve => {
-            this.rl.question(texto, resposta => resolve(resposta));
-        });
-    }
+ - Utiliza fórmulas de juros compostos para simular a variação das parcelas com o tempo.
 
-    // Encerra a interface de leitura
-    fechar() {
-        this.rl.close();
-    }
+        3. ImpressoraDeTerminal (impressoradeterminal.js) Classe responsável por exibir os resultados no terminal de forma organizada e formatada.
 
-    // Exporta funcionalidades (Funções, classes ou objetos) para serem importadas e reutilizadas em outro arquivo.
+    Mostra:
 
-    module.exports = LeitorDeTerminal
-}
+ - Valor da entrada.
 
+ - Valor total a guardar.
 
-    // === Exibição dos Resultados no Terminal === // 
+ - Parcela base mensal.
 
-    class ImpressoraDeTerminal {
-    mostrarResultados(resultado, taxaJuros) {
-        console.log('\n=== Resultados ===');
-        console.log(`\n● Valor da entrada:      R$ ${resultado.valorEntrada.toFixed(2)}`);
-        console.log(`● Valor a guardar:       R$ ${resultado.totalAGuardar.toFixed(2)}`);
-        console.log(`● Valor mensal base:     R$ ${resultado.parcelaBase.toFixed(2)}`);
+ - Parcelas corrigidas pelo IGPM.
 
-        console.log('● Valor mensal pelo IGPM:');
-        resultado.parcelasIGPM.forEach((valor, ano) => {
-            console.log(`  ○ Ano ${ano + 1}: R$ ${valor.toFixed(2)}`);
-        });
-
-        console.log(`● Valor mensal com ${(taxaJuros * 100).toFixed(2)}% ao ano:`);
-        resultado.parcelasJuros.forEach((valor, ano) => {
-            console.log(`  ○ Ano ${ano + 1}: R$ ${valor.toFixed(2)}`);
-        });
-    }
-    // Exporta funcionalidades (Funções, classes ou objetos) para serem importadas e reutilizadas em outro arquivo.
-
-    module.exports = ImpressoraDeTerminal
-}
-
-
-    // === Simulação da Entrada de um Imóvel === //
-
-    class SimuladorDeEntradaDeImovel {
-    constructor(valorImovel, percentualEntrada, duracaoAnos, taxaIGPM, taxaJuros) {
-        this.valorImovel = valorImovel;
-        this.percentualEntrada = percentualEntrada / 100;
-        this.duracaoAnos = duracaoAnos;
-        this.taxaIGPM = taxaIGPM / 100;
-        this.taxaJuros = taxaJuros / 100;
-    }
-
-    // Calcula o valor da entrada com base no percentual informado
-
-    calcularEntrada() {
-        return this.valorImovel * this.percentualEntrada;
-    }
-
-    // Calcula o total a ser guardado (15% do valor do imóvel)
-    calcularTotalAGuardar() {
-        return this.valorImovel * 0.15;
-    }
-
-    // Calcula a parcela base mensal para guardar o valor ao longo dos anos
-
-    calcularParcelaBase() {
-        return this.calcularTotalAGuardar() / (this.duracaoAnos * 12);
-    }
-
-    // Gera parcelas corrigidas com base em uma taxa anual (composta)
-    
-    gerarParcelasCorrigidas(taxa) {
-        const parcelas = [];
-        const base = this.calcularParcelaBase();
-
-        for (let ano = 1; ano <= this.duracaoAnos; ano++) {
-            const fator = Math.pow(1 + taxa, ano - 1);
-            parcelas.push(Number((base * fator).toFixed(2)));
-        }
-
-        return parcelas;
-    }
-
-    // Retorna todos os valores calculados organizados
-    getResultados() {
-        const valorEntrada = Number(this.calcularEntrada().toFixed(2));
-        const totalAGuardar = Number(this.calcularTotalAGuardar().toFixed(2));
-        const parcelaBase = Number(this.calcularParcelaBase().toFixed(2));
-        const parcelasIGPM = this.gerarParcelasCorrigidas(this.taxaIGPM);
-        const parcelasJuros = this.gerarParcelasCorrigidas(this.taxaJuros);
-
-        return {
-            valorEntrada,
-            totalAGuardar,
-            parcelaBase,
-            parcelasIGPM,
-            parcelasJuros
-        };
-    }
-    // Exporta funcionalidades (Funções, classes ou objetos) para serem importadas e reutilizadas em outro arquivo.
-
-    module.exports = SimuladorDeEntradaDeImovel
-
-}
-
-    main();
-}    
+ - Parcelas corrigidas pelos juros compostos anuais.
 
 
 
-    #Exemplo preenchido:
+         // Execução Principal (main)
 
-    Digite o valor do imóvel: 500000
-    Digite o percentual (%) da entrada: 5
-    Digite a duração do contrato (em anos): 3 
-    Digite a taxa do IGPM anual (%): 6
-    Digite a taxa de juros anual (%): 8 
+ - O fluxo principal da aplicação segue os seguintes passos:
 
-    ===Resultados===
-    ° Valor da entrada:     R$25000.00
-    ° Valor a guardar:      R$75000.00
-    ° Valor mensal base:    R$2083.33
-    ° Valor mensal pelo IGPM:
-      ° Ano 1: R$ 2083.33
-      ° Ano 2: R$ 2208.33
-      ° Ano 3: R$ 2340.83
-    ° Valor mensal com 8% ao ano:
-     ° Ano 1: R$ 2083.33
-     ° Ano 2: R$ 2250.00
-     ° Ano 3: R$ 2430.00
+ - Cria uma instância de LeitorDeTerminal para capturar os dados do usuário:
+
+ - Valor do imóvel.
+
+ - Percentual da entrada.
+
+ - Duração do contrato (em anos).
+
+ - Taxa do IGPM anual.
+
+ - Taxa de juros anual.
+
+ - Após coletar os dados, fecha a interface de entrada.
+
+ - Cria uma instância de SimuladorDeEntradaDeImovel com os dados fornecidos e chama o método getResultados() para obter os valores calculados.
+
+ - Por fim, utiliza a ImpressoraDeTerminal para exibir os resultados formatados.
+ 
+
+         // Resumo das Funcionalidades
+
+ - Entrada de dados via terminal.
+
+ - Cálculos de entrada, economia e parcelas mensais.
+
+ - Correção monetária com IGPM e juros compostos.
+
+ - Exibição formatada dos resultados.
+
+        #Exemplo preenchido:
+
+         Digite o valor do imóvel: 500000
+        Digite o percentual (%) da entrada: 5
+        Digite a duração do contrato (em anos): 3 
+        Digite a taxa do IGPM anual (%): 6
+        Digite a taxa de juros anual (%): 8 
+
+        ===Resultados===
+        ° Valor da entrada:     R$25000.00
+        ° Valor a guardar:      R$75000.00
+        ° Valor mensal base:    R$2083.33
+        ° Valor mensal pelo IGPM:
+             ° Ano 1: R$ 2083.33
+             ° Ano 2: R$ 2208.33
+             ° Ano 3: R$ 2340.83
+        ° Valor mensal com 8% ao ano:
+            ° Ano 1: R$ 2083.33
+            ° Ano 2: R$ 2250.00
+            ° Ano 3: R$ 2430.00
+
+
 
 
