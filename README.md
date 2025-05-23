@@ -10,7 +10,7 @@ Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gusta
 *(Para executar o código, utilizar o seguinte comando em seu terminal:*
 
 
-     * node index.js
+     node index.js
 
 .
 
