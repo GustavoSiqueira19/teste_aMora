@@ -1,4 +1,5 @@
 
+
 # Simulador de entrada de imóveis - aMora
 ---------------------------------------------------------------
     // Simulador de Entrada de Imóvel: 
@@ -6,14 +7,15 @@ Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gusta
 
 *(Para a execução do código, é necessário ter Node.js instalado em seu computador.)*
 
-*(Para executar o código, utilizar o comando:*
+*(Para executar o código, utilizar o seguinte comando em seu terminal:*
 
-    //(node index.js) em seu terminal)
 
+     * node index.js
+
+.
 
     // Estrutura e Componentes do Sistema:
-
-A aplicação é dividida em três módulos principais, seguindo o princípio da separação de responsabilidades:
+ A aplicação é dividida em três módulos principais, seguindo o princípio da separação de responsabilidades:
 
     1. LeitorDeTerminal (leitordeterminal.js)
 
