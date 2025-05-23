@@ -6,7 +6,7 @@ Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gusta
 
 *(Para a execução do código, é necessário ter Node.js instalado em seu computador.)*
 
-*(Para executar o código, utilizar o comando: index.js em seu terminal).*
+*(Para executar o código, utilizar o comando: (node index.js) em seu terminal).*
 
     // Estrutura e Componentes do Sistema:
 
