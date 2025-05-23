@@ -10,6 +10,7 @@ Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gusta
 
     //(node index.js) em seu terminal)
 
+
     // Estrutura e Componentes do Sistema:
 
 A aplicação é dividida em três módulos principais, seguindo o princípio da separação de responsabilidades:
