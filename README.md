@@ -5,6 +5,7 @@
 Este projeto é uma aplicação de linha de comando (CLI) desenvolvida por Gustavo Siqueira da Silva em Node.js, com o objetivo de permitir ao usuário simular o valor necessário para dar entrada em um imóvel e planejar a economia mensal necessária ao longo de um período de tempo. Considerando também a correção monetária com base em taxas como o IGPM e juros compostos anuais.
 
 *(Para a execução do código, é necessário ter Node.js instalado em seu computador.)*
+*(Para executar o código, utilizar o comando: index.js em seu terminal).*
 
     // Estrutura e Componentes do Sistema:
 
